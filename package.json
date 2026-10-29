@@ -1,0 +1,16 @@
+{
+  "name": "nobl-motion",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "stage": "node scripts/stage.mjs",
+    "pull": "node scripts/stage.mjs --pull",
+    "dev": "npx --yes hyperframes@0.8.212 preview",
+    "check": "npx --yes hyperframes@0.8.212 check",
+    "render": "node scripts/render.mjs",
+    "colour-check": "node scripts/render.mjs brand/reference/colour-check"
+  }
+}

@@ -1,0 +1,14 @@
+renders/
+node_modules/
+.venv/
+__pycache__/
+.DS_Store
+
+# The staged composition (scripts/stage.mjs) and HyperFrames' working files
+/index.html
+/.stage.json
+.hyperframes/
+
+# Third-party look references and public-domain stand-ins (never commit)
+brand/vox-images/
+assets/placeholder/
