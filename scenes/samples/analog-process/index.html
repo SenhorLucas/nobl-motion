@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <link rel="stylesheet" href="brand/tokens.css" />
+    <link rel="stylesheet" href="brand/collage/collage.css" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script src="brand/collage/collage.js"></script>
+    <style>
+      /* Four depth planes; the camera moves each by its parallax factor. */
+      .plane { inset: 0; width: 100%; height: 100%; }
+      .plane > * { position: absolute; }
+      #grain { inset: -2%; width: 104%; height: 104%; }
+      #sheet { inset: 0; background: var(--paper); z-index: 9; transform: translateX(105%); box-shadow: -1cqmin 0 3cqmin rgba(26, 23, 20, 0.25); }
+      #sheet img { inset: 0; width: 100%; height: 100%; object-fit: cover; mix-blend-mode: multiply; opacity: 0.5; }
+
+      /* Beat 1: expose */
+      #circle1 { --c: 6.6; --r: 0.4; width: calc(5.2 * var(--gy)); aspect-ratio: 1; }
+      #camera { --c: 7.6; --r: 0.1; height: calc(5.8 * var(--gy)); aspect-ratio: 770 / 1921; transform: rotate(4deg); }
+      /* Beat 2: develop */
+      #neg { --c: 1.2; --r: 1.6; --cs: 9.6; --rs: 2.2; transform: rotate(-1.5deg); }
+      /* Beat 3: enlarge */
+      #strip { --c: 1.2; --r: 2; --cs: 9.6; --rs: 1.5; transform: rotate(1deg); }
+      /* Beat 4: print */
+      #person { --c: 7; --r: 0.5; height: calc(5.5 * var(--gy)); aspect-ratio: 1418 / 2124; }
+      #headline { --c: 0; --r: 1.9; width: calc(6.5 * var(--gx)); }
+
+      .b2, .b3, .b4, .caption { opacity: 0; }
+      #block { left: 40cqw; top: 16cqh; width: 44cqw; height: 84cqh; transform-origin: 0 0; }
+      .step { --c: 0; --r: 0; display: flex; align-items: center; gap: 1.6cqmin; }
+      .caption { --c: 0; --r: 5.35; width: calc(6.5 * var(--gx)); font-size: var(--t-body); font-weight: 500; color: var(--ink); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="analog-process" data-start="0" data-duration="12" data-fps="24" data-width="1920" data-height="1080">
+      <div class="plane" id="p0" data-depth="0">
+        <img id="grain" class="grain" src="assets/placeholder/paper-grain.jpg" alt="" />
+      </div>
+      <div class="plane" id="p1" data-depth="1">
+        <div class="circle yellow g b1" id="circle1"></div>
+        <div class="blue b4" id="block"></div>
+      </div>
+      <div class="plane" id="p2" data-depth="2">
+        <div class="cutout g b1" id="camera" data-asset="rolleiflex.png">
+          <img src="assets/placeholder/rolleiflex.png" alt="" data-color-grading='{"intensity":1,"effects":{"monoScreen":1,"monoScreenSize":0.2,"monoScreenAngle":0.25,"monoScreenSpread":0.3,"monoScreenShape":0,"monoScreenInvert":0},"palette":["#1A1714","#FAF6EC"]}' />
+        </div>
+        <div class="g gs b2" id="neg"></div>
+        <div class="g gs b3" id="strip"></div>
+        <div class="cutout g b4" id="person" data-asset="press-photographer.png">
+          <img src="assets/placeholder/press-photographer.png" alt="" data-color-grading='{"intensity":1,"effects":{"monoScreen":1,"monoScreenSize":0.18,"monoScreenAngle":0.25,"monoScreenSpread":0.3,"monoScreenShape":0,"monoScreenInvert":0},"palette":["#1A1714","#FAF6EC"]}' />
+        </div>
+      </div>
+      <div class="plane" id="p3" data-depth="3">
+        <div class="step g b1"><span class="chapter">01.</span><span class="label-box">Expose</span></div>
+        <div class="step g b2"><span class="chapter">02.</span><span class="label-box">Develop</span></div>
+        <div class="step g b3"><span class="chapter">03.</span><span class="label-box">Enlarge</span></div>
+        <div class="step g b4"><span class="chapter">04.</span><span class="label-box">Print</span></div>
+        <h2 class="headline h2 g b4" id="headline">Light, silver, <span class="mark">paper</span>.</h2>
+      </div>
+      <div id="sheet"><img src="assets/placeholder/paper-grain.jpg" alt="" /></div>
+    </div>
+
+    <script type="module">
+      import anchors from "./assets/placeholder/anchors.json" with { type: "json" };
+      import cues from "./scenes/samples/analog-process/data/cues.json" with { type: "json" };
+
+      await document.fonts.ready;
+      const c = collage.setup({ anchors });
+      const $ = (id) => document.getElementById(id);
+      $("p3").append(c.svg); // accents ride the type plane
+      const FPS = 24, step = (n) => n / FPS;
+      const T = Object.fromEntries(cues.beats.map((b) => [b.id, b.start]));
+      const factor = { p0: 0.2, p1: 0.5, p2: 1, p3: 1.15 };
+      const planes = Object.keys(factor).map($);
+
+      // Accents and textures, each anchored (built at rest, before any camera move).
+      const lens = c.feature("camera", "taking-lens");
+      const burst = c.sunburst({ at: lens, inner: 7.5, outer: [15, 19], depth: 3 });
+      burst.classList.add("b1");
+      const frames = c.negativeStrip("neg", { frames: 4, start: 23, holes: 34, src: "assets/placeholder/press-photographer.png" });
+      const keep2 = c.keeper({ around: frames[2] });
+      c.testStrip("strip", { base: 2, steps: 6 });
+      const bands = [...document.querySelectorAll("#strip > div")];
+      const keep3 = c.keeper({ around: bands[3], pad: 0.6, seed: 9 });
+      // Beat 4's block starts exactly on the chosen band (the match cut): its
+      // final rect is in CSS; it starts transformed onto the band's rect.
+      const band = c.box(bands[3]);
+      const blk = c.box("block");
+      const onBand = { x: band.x - blk.x, y: band.y - blk.y, scaleX: band.w / blk.w, scaleY: band.h / blk.h };
+      gsap.set([keep2, keep3], { opacity: 0 });
+
+      const tl = gsap.timeline({ paused: true });
+      const show = (sel, at) => { tl.set(sel, { opacity: 1 }, at); };
+      const hide = (sel, at) => { tl.set(sel, { opacity: 0 }, at); };
+      // Placed by hand: 3 held frames, no tweened ease.
+      const place = (sel, at, from = { y: "3cqh", rotation: -2 }) =>
+        tl.fromTo(sel, { ...from, opacity: 0 }, { y: 0, rotation: 0, opacity: 1, duration: step(3), ease: "steps(3)" }, at);
+      // Camera: one smooth push per beat, each plane by its parallax factor.
+      const push = (at, dur, dx, dy, ds) => planes.forEach((p) => {
+        const f = factor[p.id];
+        tl.to(p, { x: -dx * f, y: -dy * f, scale: 1 + ds * f, duration: dur, ease: "sine.inOut" }, at);
+      });
+      const reset = (at) => tl.set(planes, { x: 0, y: 0, scale: 1, transformOrigin: "50% 50%" }, at);
+
+
+      // Beat 1: expose. Light at the taking lens, then push through it.
+      place(".b1.step", T.expose + 0.2);
+      tl.fromTo(burst, { opacity: 0, scale: 0.6, transformOrigin: `${lens[0]}px ${lens[1]}px` }, { opacity: 1, scale: 1, duration: step(6), ease: "steps(3)" }, T.expose + 0.9);
+      push(T.expose, 2.4, 30, 10, 0.03);
+      tl.set(planes, { transformOrigin: `${lens[0]}px ${lens[1]}px` }, T.develop - 0.55);
+      planes.forEach((p) => tl.to(p, { scale: 1 + 9 * factor[p.id], duration: 0.55, ease: "power3.in" }, T.develop - 0.55));
+      hide(".b1, .b1 *", T.develop);
+      reset(T.develop);
+
+      // Beat 2: develop. The strip lands, the keeper mark picks frame 24.
+      show(".b2", T.develop);
+      place("#neg", T.develop, { y: "-6cqh", rotation: 3 });
+      place(".b2.step", T.develop + 0.3);
+      tl.set(keep2, { opacity: 1 }, T.develop + 1.6);
+      push(T.develop, 2.6, -20, 0, 0.025);
+      // Paper slide: a fresh sheet covers the desk, then becomes it.
+      tl.to("#sheet", { x: "0%", duration: step(10), ease: "steps(5)" }, T.enlarge - step(10));
+      hide(".b2", T.enlarge);
+      tl.set(keep2, { opacity: 0 }, T.enlarge);
+      tl.set("#sheet", { x: "105%" }, T.enlarge);
+      reset(T.enlarge);
+
+      // Beat 3: enlarge. Bands placed one stop at a time; keeper on 16s.
+      show(".b3", T.enlarge);
+      tl.set(bands, { opacity: 0 }, T.enlarge);
+      bands.forEach((b, i) => tl.set(b, { opacity: 1 }, T.enlarge + 0.25 + i * step(4)));
+      place(".b3.step", T.enlarge + 0.1);
+      tl.set(keep3, { opacity: 1 }, T.enlarge + 1.7);
+      push(T.enlarge, 2.6, 0, 12, 0.025);
+
+      // Match cut: the chosen band becomes the blue block, which takes its place.
+      hide(".b3", T.print);
+      tl.set(keep3, { opacity: 0 }, T.print);
+      reset(T.print);
+      show("#block", T.print);
+      tl.set("#block", onBand, T.print);
+      tl.to("#block", { x: 0, y: 0, scaleX: 1, scaleY: 1, duration: step(6), ease: "steps(3)" }, T.print + step(4));
+      place("#person", T.print + 0.45, { y: "8cqh", rotation: 3 });
+      place(".b4.step", T.print + 0.3);
+      place("#headline", T.print + 0.7);
+      push(T.print + 0.5, cues.end - T.print - 0.5, -18, 0, 0.03);
+
+      // Captions stand in for the narrator: one line per beat.
+      cues.beats.forEach((b, i) => {
+        const p = document.createElement("p");
+        p.className = "small g caption";
+        p.textContent = b.line;
+        $("p3").append(p);
+        tl.set(p, { opacity: 1 }, b.start + 0.2);
+        tl.set(p, { opacity: 0 }, cues.beats[i + 1]?.start ?? cues.end);
+      });
+      tl.set({}, {}, cues.end);
+
+      // On twos: the paper boils every second frame (seeded, a function of t).
+      const grain = $("grain");
+      const accents = c.svg;
+      window.addEventListener("hf-seek", (e) => {
+        const k = Math.floor(Math.round(e.detail.time * FPS) / 2);
+        const r = (n) => ((Math.sin(k * 12.9898 + n * 78.233) * 43758.5453) % 1 + 1) % 1;
+        grain.style.transform = `translate(${(r(1) - 0.5) * 1.2}%, ${(r(2) - 0.5) * 1.2}%)`;
+        accents.style.translate = `${(r(3) - 0.5) * 2}px ${(r(4) - 0.5) * 2}px`;
+      });
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["analog-process"] = tl;
+    </script>
+  </body>
+</html>

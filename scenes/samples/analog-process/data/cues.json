@@ -1,0 +1,10 @@
+{
+ "about": "Stand-in timings (seconds) until the VO exists; then each beat starts on a word index of data/transcript.json.",
+ "beats": [
+  { "id": "expose", "start": 0.0, "line": "Light enters the lens and lands on the film." },
+  { "id": "develop", "start": 3.2, "line": "Developer turns the exposed silver black: a negative." },
+  { "id": "enlarge", "start": 6.4, "line": "Under the enlarger, a test strip finds the exposure." },
+  { "id": "print", "start": 9.2, "line": "The print is the negative of the negative." }
+ ],
+ "end": 12.0
+}
