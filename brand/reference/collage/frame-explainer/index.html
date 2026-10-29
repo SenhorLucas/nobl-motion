@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <link rel="stylesheet" href="brand/tokens.css" />
+    <link rel="stylesheet" href="brand/collage/collage.css" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script src="brand/collage/collage.js"></script>
+    <style>
+      /* Grid positions (12 x 6). */
+      #chapter { --c: 0; --r: 0; }
+      #eyebrow { --c: 1; --r: 0.18; }
+      #headline { --c: 0; --r: 0.55; }
+      #sheet { --c: 0; --r: 1.45; --cs: 7.6; --rs: 4.55; }
+      #block { left: calc(5cqw + 8.6 * var(--gx)); top: calc(5cqh + 1.45 * var(--gy)); width: calc(100cqw - 5cqw - 8.6 * var(--gx)); height: calc(3.6 * var(--gy)); }
+      #canister { --c: 8.25; --r: 1.25; height: calc(3 * var(--gy)); aspect-ratio: 2416 / 1711; transform: rotate(-6deg); }
+      #label { --c: 8.6; --r: 5.35; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="collage-explainer" data-start="0" data-duration="1" data-width="1920" data-height="1080">
+      <img class="grain" data-depth="0" src="assets/placeholder/paper-grain.jpg" alt="" />
+      <div class="grid-paper torn-top g gs" id="sheet" data-depth="0"></div>
+
+      <div class="blue" id="block" data-depth="1"></div>
+      <div class="cutout g" id="canister" data-depth="2" data-asset="film-canister.png">
+        <img
+          src="assets/placeholder/film-canister.png"
+          alt=""
+          data-color-grading='{"intensity":1,"effects":{"monoScreen":1,"monoScreenSize":0.2,"monoScreenAngle":0.25,"monoScreenSpread":0.3,"monoScreenShape":0,"monoScreenInvert":0},"palette":["#1A1714","#FAF6EC"]}'
+        />
+      </div>
+
+      <div class="chapter g" id="chapter" data-depth="3">02.</div>
+      <div class="tracked g" id="eyebrow" data-depth="3">Spectral sensitivity</div>
+      <h2 class="headline h2 g" id="headline" data-depth="3">Three layers, <span class="mark">three colours</span></h2>
+      <div class="label-box g" id="label" data-depth="3">Portra 400</div>
+    </div>
+
+    <script type="module">
+      import anchors from "./assets/placeholder/anchors.json" with { type: "json" };
+      import ss from "./brand/reference/collage/frame-explainer/data/portra400-sensitivity.json" with { type: "json" };
+
+      await document.fonts.ready;
+      const c = collage.setup({ anchors });
+      const { unit, add, tok } = c;
+
+      // Plot box inside the grid sheet.
+      const sh = c.box("sheet");
+      const pad = { l: 8 * unit, r: 4 * unit, t: 15 * unit, b: 10 * unit };
+      const x0 = sh.x + pad.l, x1 = sh.x + sh.w - pad.r;
+      const y0 = sh.y + sh.h - pad.b, y1 = sh.y + pad.t;
+      const sx = (x) => x0 + ((x - ss.x.min) / (ss.x.max - ss.x.min)) * (x1 - x0);
+      const sy = (y) => y0 - ((y - ss.y.min) / (ss.y.max - ss.y.min)) * (y0 - y1);
+
+      // The tick scale IS the wavelength axis (it measures something real).
+      c.ticks({ from: [x0, y0], to: [x1, y0], domain: [ss.x.min, ss.x.max], values: [400, 450, 500, 550, 600, 650, 700], minor: [375, 425, 475, 525, 575, 625, 675], labels: ["400", "450", "500", "550", "600", "650", "700 nm"] });
+      // Value axis: a plain black hairline with its unit.
+      add("line", { x1: x0, y1: y0, x2: x0, y2: y1, stroke: tok("--leader-black"), "stroke-width": 0.18 * unit });
+      for (let y = ss.y.min; y <= ss.y.max; y += 1) {
+        const t = add("text", { x: x0 - 1.6 * unit, y: sy(y) + 0.9 * unit, "text-anchor": "end", class: "scale-label" });
+        t.textContent = String(y);
+      }
+      const yl = add("text", { x: x0, y: y1 - 2.4 * unit, "text-anchor": "start", class: "scale-label" });
+      yl.textContent = ss.y.label;
+
+      // Curves in channel colours (data labels).
+      const channel = { b: "--kodachrome-blue", g: "--kodachrome-green", r: "--kodachrome-red" };
+      for (const k of ["b", "g", "r"]) {
+        add("path", { d: ss.curves[k].map(([x, y], j) => `${j ? "L" : "M"}${sx(x).toFixed(1)},${sy(y).toFixed(1)}`).join(""), fill: "none", stroke: tok(channel[k]), "stroke-width": 0.5 * unit, "stroke-linejoin": "round", "stroke-linecap": "round" });
+      }
+
+      // Swatches: each layer's centroid wavelength, shown as its own spectral
+      // colour (computed, in data), with a leader to that point on its curve.
+      const chipY = sh.y + 9 * unit;
+      ["b", "g", "r"].forEach((k) => {
+        const p = ss.peaks[k];
+        const sample = [sx(p.nm), sy(p.log_sensitivity)];
+        c.swatch({ sample, colour: p.srgb, label: `${p.nm} nm`, at: [sx(p.nm) - 2.5 * unit, chipY] });
+      });
+
+      // The label names the canister: a leader to it.
+      c.leader({ from: document.getElementById("label"), to: c.feature("canister", "canister") });
+
+      const tl = gsap.timeline({ paused: true });
+      tl.set({}, {}, 1);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["collage-explainer"] = tl;
+    </script>
+  </body>
+</html>

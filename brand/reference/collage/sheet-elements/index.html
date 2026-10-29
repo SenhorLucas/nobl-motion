@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <link rel="stylesheet" href="brand/tokens.css" />
+    <link rel="stylesheet" href="brand/collage/collage.css" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script src="brand/collage/collage.js"></script>
+    <style>
+      /* 4 x 3 tiles inside the safe area. Each tile: a live demo, a name, its job. */
+      #sheet {
+        left: 5cqw; top: 5cqh; width: 90cqw; height: 90cqh;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        gap: 2.2cqmin 2.6cqmin;
+      }
+      .tile { position: relative; display: flex; flex-direction: column; border-top: var(--hairline) solid var(--leader-black); padding-top: 0.8cqmin; }
+      .tile .demo { position: relative; flex: 1; min-height: 0; }
+      .tile .demo > * { position: absolute; }
+      .tile .name { font-size: var(--t-label); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-top: 0.6cqmin; }
+      .tile .name b { color: var(--kodachrome-red-deep); margin-right: 0.6em; font-variant-numeric: tabular-nums; }
+      .tile .job { font-size: var(--t-annotation); font-weight: 500; color: var(--ink-secondary); line-height: 1.15; }
+      .mini-cut { height: 92%; top: 4%; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="collage-sheet-elements" data-start="0" data-duration="1" data-width="1920" data-height="1080">
+      <img class="grain" data-depth="0" src="assets/placeholder/paper-grain.jpg" alt="" />
+      <div id="sheet" data-depth="1">
+        <div class="tile"><div class="demo" id="d1">
+          <div class="circle yellow" style="height: 100%; aspect-ratio: 1; left: 50%; top: 0; transform: translateX(-50%)"></div>
+          <div class="cutout mini-cut" id="cam1" data-asset="rolleiflex.png" style="left: 41%; aspect-ratio: 770 / 1921">
+            <img src="assets/placeholder/rolleiflex.png" alt="" data-color-grading='{"intensity":1,"effects":{"monoScreen":1,"monoScreenSize":0.2,"monoScreenAngle":0.25,"monoScreenSpread":0.3,"monoScreenShape":0,"monoScreenInvert":0},"palette":["#1A1714","#FAF6EC"]}' />
+          </div>
+        </div><div class="name"><b>01</b>Circle field</div><div class="job">The subject sits on it. One per beat.</div></div>
+
+        <div class="tile"><div class="demo">
+          <div class="blue" style="left: 30%; top: 10%; width: 70%; height: 80%"></div>
+          <div class="cutout" id="can2" data-asset="film-canister.png" style="left: 8%; top: 4%; height: 90%; aspect-ratio: 2416 / 1711">
+            <img src="assets/placeholder/film-canister.png" alt="" data-color-grading='{"intensity":1,"effects":{"monoScreen":1,"monoScreenSize":0.2,"monoScreenAngle":0.25,"monoScreenSpread":0.3,"monoScreenShape":0,"monoScreenInvert":0},"palette":["#1A1714","#FAF6EC"]}' />
+          </div>
+        </div><div class="name"><b>02</b>Block field</div><div class="job">Grounds a second object. Snaps to the grid.</div></div>
+
+        <div class="tile"><div class="demo">
+          <div class="numeral" style="left: 0; top: 4%; font-size: 9.2cqw" data-layout-ignore>400</div>
+        </div><div class="name"><b>03</b>Giant numeral</div><div class="job">A number that matters: ISO, stop, year.</div></div>
+
+        <div class="tile"><div class="demo">
+          <div class="headline h2" style="left: 0; top: 24%">the <span class="mark">key</span> word</div>
+        </div><div class="name"><b>04</b>Highlight</div><div class="job">The one word the narrator stresses.</div></div>
+
+        <div class="tile"><div class="demo" id="d5">
+          <div class="cutout mini-cut" id="cam5" data-asset="rolleiflex.png" style="left: 41%; aspect-ratio: 770 / 1921">
+            <img src="assets/placeholder/rolleiflex.png" alt="" data-color-grading='{"intensity":1,"effects":{"monoScreen":1,"monoScreenSize":0.2,"monoScreenAngle":0.25,"monoScreenSpread":0.3,"monoScreenShape":0,"monoScreenInvert":0},"palette":["#1A1714","#FAF6EC"]}' />
+          </div>
+        </div><div class="name"><b>05</b>Sunburst</div><div class="job">Light, from its source: lens, flash, lamp.</div></div>
+
+        <div class="tile"><div class="demo">
+          <div class="label-box" id="lab6" style="left: 0; top: 4%">Taking lens</div>
+          <div class="cutout mini-cut" id="cam6" data-asset="rolleiflex.png" style="left: 78%; aspect-ratio: 770 / 1921">
+            <img src="assets/placeholder/rolleiflex.png" alt="" data-color-grading='{"intensity":1,"effects":{"monoScreen":1,"monoScreenSize":0.2,"monoScreenAngle":0.25,"monoScreenSpread":0.3,"monoScreenShape":0,"monoScreenInvert":0},"palette":["#1A1714","#FAF6EC"]}' />
+          </div>
+        </div><div class="name"><b>06</b>Arrow</div><div class="job">From a label to the exact feature. One per frame.</div></div>
+
+        <div class="tile"><div class="demo">
+          <div class="label-box" id="lab7" style="left: 0; top: 74%">Portra 400</div>
+          <div class="cutout" id="can7" data-asset="film-canister.png" style="left: 44%; top: 0; height: 60%; aspect-ratio: 2416 / 1711">
+            <img src="assets/placeholder/film-canister.png" alt="" data-color-grading='{"intensity":1,"effects":{"monoScreen":1,"monoScreenSize":0.2,"monoScreenAngle":0.25,"monoScreenSpread":0.3,"monoScreenShape":0,"monoScreenInvert":0},"palette":["#1A1714","#FAF6EC"]}' />
+          </div>
+        </div><div class="name"><b>07</b>Leader line</div><div class="job">Ties a name to its target. Both ends anchored.</div></div>
+
+        <div class="tile"><div class="demo" id="d8"></div><div class="name"><b>08</b>Tick scale</div><div class="job">Measures something real, labelled.</div></div>
+
+        <div class="tile"><div class="demo" id="d9"><div id="strip9" style="left: 0; top: 46%; width: 100%; height: 42%"></div></div><div class="name"><b>09</b>Swatch chip</div><div class="job">A sampled colour, with a line to its source.</div></div>
+
+        <div class="tile"><div class="demo"><div id="neg10" style="left: 0; top: 12%; width: 100%; height: 76%"></div></div><div class="name"><b>10</b>Keeper mark</div><div class="job">Grease pencil around the chosen frame.</div></div>
+
+        <div class="tile"><div class="demo">
+          <div class="chapter" style="left: 0; top: 0">01.</div>
+          <div class="tracked" style="left: 32%; top: 14%">Spectral</div>
+          <div class="label-box" style="left: 0; top: 56%">Chapter one</div>
+        </div><div class="name"><b>11</b>Labels</div><div class="job">Chapter numeral, label box, tracked eyebrow.</div></div>
+
+        <div class="tile"><div class="demo">
+          <div class="grid-paper" style="left: 0; top: 2%; width: 46%; height: 92%"></div>
+          <div id="strip12" style="left: 52%; top: 22%; width: 48%; height: 56%"></div>
+        </div><div class="name"><b>12</b>Desk textures</div><div class="job">Grid paper, test strips, negatives. No newsprint.</div></div>
+      </div>
+    </div>
+
+    <script type="module">
+      import anchors from "./assets/placeholder/anchors.json" with { type: "json" };
+
+      await document.fonts.ready;
+      const c = collage.setup({ anchors });
+      const { unit } = c;
+
+      // 05: light from the taking lens. 06: label -> lens.
+      c.sunburst({ at: c.feature("cam5", "taking-lens"), inner: 2.6, outer: [5.2, 6.4], width: 0.28, depth: 3 });
+      c.arrow({ from: document.getElementById("lab6"), to: c.feature("cam6", "taking-lens"), bend: 0.25 });
+      // 07: label -> canister.
+      c.leader({ from: document.getElementById("lab7"), to: c.feature("can7", "canister") });
+      // 08: a stop scale.
+      const d8 = c.box("d8");
+      c.ticks({ from: [d8.x + 2 * unit, d8.y + d8.h * 0.45], to: [d8.x + d8.w - 2 * unit, d8.y + d8.h * 0.45], domain: [-3, 3], values: [-2, -1, 0, 1, 2], labels: ["−2", "−1", "0", "+1", "+2"], minor: [-1.5, -0.5, 0.5, 1.5] });
+      // 09: a swatch sampled from a test-strip band (its colour read from the band itself).
+      c.testStrip("strip9", { base: 2, steps: 5 });
+      const band = document.querySelectorAll("#strip9 > div")[2];
+      const bb = c.box(band);
+      const d9 = c.box("d9");
+      c.swatch({ sample: [bb.x + bb.w / 2, bb.y + bb.h * 0.35], colour: getComputedStyle(band).backgroundColor, label: "8s", at: [d9.x + d9.w * 0.62, d9.y + 6.2 * unit], size: 4.4 });
+      // 10: keeper mark on a negative strip.
+      const frames = c.negativeStrip("neg10", { frames: 3, start: 7, holes: 11 });
+      c.keeper({ around: frames[1], pad: 0.8 });
+      // 12: a test strip on the desk.
+      c.testStrip("strip12", { base: 4, steps: 3 });
+
+      const tl = gsap.timeline({ paused: true });
+      tl.set({}, {}, 1);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["collage-sheet-elements"] = tl;
+    </script>
+  </body>
+</html>

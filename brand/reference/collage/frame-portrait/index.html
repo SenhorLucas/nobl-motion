@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <link rel="stylesheet" href="brand/tokens.css" />
+    <link rel="stylesheet" href="brand/collage/collage.css" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script src="brand/collage/collage.js"></script>
+    <style>
+      /* Grid positions (12 x 6). */
+      #numeral { --c: 5.9; --r: -0.15; font-size: calc(3.9 * var(--gy)); }
+      #person { --c: 7.2; --r: 0.85; height: calc(5.6 * var(--gy)); aspect-ratio: 1418 / 2124; }
+      #q1 { --c: 0; --r: 0.9; }
+      #q2 { --c: 0.9; --r: 1.65; }
+      #q3 { --c: 0; --r: 2.55; }
+      #q3 .bar { display: inline-block; width: calc(0.7 * var(--gx)); height: 0.9cqh; vertical-align: middle; margin: 0 0.6em; background: var(--kodachrome-blue); }
+      #strip { --c: 0; --r: 3.75; --cs: 5.6; --rs: 1.45; transform: rotate(-1.5deg); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="collage-portrait" data-start="0" data-duration="1" data-width="1920" data-height="1080">
+      <img class="grain" data-depth="0" src="assets/placeholder/paper-grain.jpg" alt="" />
+      <div class="g gs" id="strip" data-depth="0"></div>
+
+      <div class="numeral g" id="numeral" data-depth="1" data-layout-ignore>400</div>
+
+      <div class="cutout g" id="person" data-depth="2" data-asset="press-photographer.png">
+        <img
+          src="assets/placeholder/press-photographer.png"
+          alt=""
+          data-color-grading='{"intensity":1,"effects":{"monoScreen":1,"monoScreenSize":0.18,"monoScreenAngle":0.25,"monoScreenSpread":0.3,"monoScreenShape":0,"monoScreenInvert":0},"palette":["#1A1714","#FAF6EC"]}'
+        />
+      </div>
+
+      <div class="tracked g" id="q1" data-depth="3">Every film stock</div>
+      <div class="label-box g" id="q2" data-depth="3">is a decision</div>
+      <div class="tracked g" id="q3" data-depth="3">about what<span class="bar"></span>to keep</div>
+    </div>
+
+    <script type="module">
+      import anchors from "./assets/placeholder/anchors.json" with { type: "json" };
+
+      await document.fonts.ready;
+      const c = collage.setup({ anchors });
+
+      // Light: from the flash reflector, behind the photographer.
+      c.sunburst({ at: c.feature("person", "flash"), inner: 6.5, outer: [17, 22] });
+
+      // Texture: the negatives this decision is about...
+      const frames = c.negativeStrip("strip", { frames: 4, start: 23, src: "assets/placeholder/press-photographer.png" });
+      // ...and the keeper mark around the one that was kept.
+      c.keeper({ around: frames[2] });
+
+      const tl = gsap.timeline({ paused: true });
+      tl.set({}, {}, 1);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["collage-portrait"] = tl;
+    </script>
+  </body>
+</html>

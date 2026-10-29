@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <link rel="stylesheet" href="brand/tokens.css" />
+    <link rel="stylesheet" href="brand/collage/collage.css" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script src="brand/collage/collage.js"></script>
+    <style>
+      #eyebrow { left: 5cqw; top: 5cqh; }
+      #headline { left: 5cqw; top: 9.5cqh; }
+
+      /* Exploded view of the title frame: four planes, one camera. */
+      #stage { left: 0; top: 25cqh; width: 46cqw; height: 74cqh; perspective: 260cqmin; }
+      #stack { position: absolute; left: 16%; top: 30%; width: 66%; aspect-ratio: 16 / 9; transform-style: preserve-3d; transform: rotateX(56deg) rotateZ(-34deg); }
+      .plane { position: absolute; inset: 0; container-type: size; outline: 0.25cqmin dashed rgba(26, 23, 20, 0.35); }
+      .plane > * { position: absolute; }
+      .p0 { transform: translateZ(0); background: var(--paper); box-shadow: 0 1cqmin 3cqmin rgba(26, 23, 20, 0.2); }
+      .p0 .gridlines { inset: 5%; background-image: linear-gradient(90deg, rgba(41, 134, 204, 0.55) 0.12cqmin, transparent 0.12cqmin), linear-gradient(rgba(41, 134, 204, 0.55) 0.12cqmin, transparent 0.12cqmin); background-size: calc(100% / 12) calc(100% / 6); outline: 0.12cqmin solid rgba(41, 134, 204, 0.55); }
+      .p1 { transform: translateZ(13cqmin); }
+      .p2 { transform: translateZ(26cqmin); }
+      .p3 { transform: translateZ(39cqmin); }
+      .badge { left: -2%; top: -6%; width: 9cqh; height: 9cqh; border-radius: 50%; background: var(--leader-black); color: var(--leader-cream); display: grid; place-items: center; font-size: 5.5cqh; font-weight: 700; }
+      .mini-headline { left: 5%; top: 32%; font-size: 9cqh; font-weight: 700; line-height: 0.98; letter-spacing: -0.03em; }
+      .mini-label { left: 5%; top: 21%; padding: 0.6cqh 1.2cqh; background: var(--leader-black); color: var(--leader-cream); font-size: 3.2cqh; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; }
+      .mini-chapter { left: 5%; top: 6%; font-size: 6.5cqh; font-weight: 700; }
+
+      #legend { left: 47cqw; top: 24cqh; width: 18cqw; display: flex; flex-direction: column; gap: 3.2cqh; }
+      .lg { display: flex; align-items: center; gap: 0.7em; font-size: var(--t-annotation); font-weight: 600; line-height: 1.15; }
+      .lg b { flex: none; width: 1.6em; height: 1.6em; border-radius: 50%; background: var(--leader-black); color: var(--leader-cream); display: grid; place-items: center; font-variant-numeric: tabular-nums; }
+      .lg em { display: block; font-style: normal; font-weight: 500; color: var(--ink-secondary); }
+
+      #rules { left: 67cqw; top: 22cqh; width: 28cqw; }
+      #rules h3 { margin: 0 0 1.4cqh; }
+      #rules ul { margin: 0 0 4cqh; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 1.4cqh; }
+      #rules li { font-size: var(--t-annotation); font-weight: 500; line-height: 1.2; padding-left: 1.4em; position: relative; color: var(--ink); }
+      #rules li::before { content: ""; position: absolute; left: 0; top: 0.42em; width: 0.6em; height: 0.6em; }
+      #rules .do li::before { background: var(--kodachrome-blue); }
+      #rules .dont li::before { background: var(--kodachrome-red); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="collage-sheet-depth" data-start="0" data-duration="1" data-width="1920" data-height="1080">
+      <img class="grain" data-depth="0" src="assets/placeholder/paper-grain.jpg" alt="" />
+      <div class="tracked" id="eyebrow" data-depth="3">Depth, grid and rules</div>
+      <h2 class="headline h2" id="headline" data-depth="3">Four planes, <span class="mark">one camera</span></h2>
+
+      <div id="stage" data-depth="1" data-layout-ignore>
+        <div id="stack">
+          <div class="plane p0">
+            <div class="badge">0</div>
+            <img src="assets/placeholder/paper-grain.jpg" alt="" style="inset: 0; width: 100%; height: 100%; object-fit: cover; mix-blend-mode: multiply; opacity: 0.5" />
+            <div id="mini-strip" style="left: 5%; top: 84%; width: 42%; height: 10%"></div>
+            <div class="gridlines"></div>
+          </div>
+          <div class="plane p1">
+            <div class="badge">1</div>
+            <div class="circle yellow" style="left: 55%; top: 10%; height: 76%; aspect-ratio: 1"></div>
+          </div>
+          <div class="plane p2">
+            <div class="badge">2</div>
+            <img src="assets/placeholder/rolleiflex.png" alt="" style="left: 64%; top: 2%; height: 94%; transform: rotate(5deg)" data-color-grading='{"intensity":1,"effects":{"monoScreen":1,"monoScreenSize":0.2,"monoScreenAngle":0.25,"monoScreenSpread":0.3,"monoScreenShape":0,"monoScreenInvert":0},"palette":["#1A1714","#FAF6EC"]}' />
+          </div>
+          <div class="plane p3">
+            <div class="badge">3</div>
+            <div class="mini-chapter">01.</div>
+            <div class="mini-label">Chapter one</div>
+            <div class="mini-headline">How film<br />sees colour</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="legend" data-depth="3">
+        <div class="lg"><b>3</b><span>Type and accents<em>moves 1.15×</em></span></div>
+        <div class="lg"><b>2</b><span>Cutouts<em>moves 1×</em></span></div>
+        <div class="lg"><b>1</b><span>Fields<em>moves 0.5×</em></span></div>
+        <div class="lg"><b>0</b><span>Paper, textures, grid<em>moves 0.2×</em></span></div>
+      </div>
+
+      <div id="rules" data-depth="3">
+        <h3 class="label-box" style="position: static; display: inline-block">Do</h3>
+        <ul class="do">
+          <li>Anchor every accent to a feature, a label or a data point.</li>
+          <li>Light comes from a light source: lens, flash, lamp.</li>
+          <li>Scales measure real values and say their unit.</li>
+          <li>Leave paper empty. One hero, one field.</li>
+        </ul>
+        <h3 class="label-box" style="position: static; display: inline-block">Don't</h3>
+        <ul class="dont">
+          <li>Decorative arrows, ticks, dots or squares.</li>
+          <li>Newsprint or found text. We explain, we don't report.</li>
+          <li>Two circles, two arrows or two highlights in a frame.</li>
+          <li>Crossfades between scenes.</li>
+        </ul>
+      </div>
+    </div>
+
+    <script type="module">
+      await document.fonts.ready;
+      const c = collage.setup({});
+      c.testStrip("mini-strip", { base: 2, steps: 6 });
+      document.querySelectorAll("#mini-strip span").forEach((s) => (s.style.display = "none"));
+
+      const tl = gsap.timeline({ paused: true });
+      tl.set({}, {}, 1);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["collage-sheet-depth"] = tl;
+    </script>
+  </body>
+</html>
