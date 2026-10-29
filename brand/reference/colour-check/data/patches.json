@@ -1,0 +1,27 @@
+{
+ "about": "Known sRGB patches for the colour pipeline check. Full-bleed grid, no gutters or labels; scripts/colour_check.py samples the centre of each cell.",
+ "cols": 5,
+ "rows": 4,
+ "patches": [
+  {"name": "red", "rgb": [255, 0, 0]},
+  {"name": "green", "rgb": [0, 255, 0]},
+  {"name": "blue", "rgb": [0, 0, 255]},
+  {"name": "cyan", "rgb": [0, 255, 255]},
+  {"name": "magenta", "rgb": [255, 0, 255]},
+  {"name": "yellow", "rgb": [255, 255, 0]},
+  {"name": "grey 0", "rgb": [0, 0, 0]},
+  {"name": "grey 32", "rgb": [32, 32, 32]},
+  {"name": "grey 64", "rgb": [64, 64, 64]},
+  {"name": "grey 96", "rgb": [96, 96, 96]},
+  {"name": "grey 128", "rgb": [128, 128, 128]},
+  {"name": "grey 160", "rgb": [160, 160, 160]},
+  {"name": "grey 192", "rgb": [192, 192, 192]},
+  {"name": "grey 224", "rgb": [224, 224, 224]},
+  {"name": "grey 255", "rgb": [255, 255, 255]},
+  {"name": "dark skin (ColorChecker)", "rgb": [115, 82, 68]},
+  {"name": "light skin (ColorChecker)", "rgb": [194, 150, 130]},
+  {"name": "kodachrome red", "rgb": [244, 67, 54]},
+  {"name": "kodachrome green", "rgb": [28, 161, 104]},
+  {"name": "kodachrome blue", "rgb": [41, 134, 204]}
+ ]
+}
