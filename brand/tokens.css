@@ -135,4 +135,9 @@
 
   /* ---------- Texture ---------- */
   --grain-opacity: 0.18;   /* store's darkroom grain overlay */
+  /* Paper boil (components/paper-boil.js): a new sheet of the texture set
+   * every N frames; the paper never moves. 3 at 24 fps = 8 swaps a second.
+   * Strength 0-1 scales the set's preset (assets/textures/<id>/manifest.json). */
+  --boil-every: 3;
+  --boil-strength: 1;
 }

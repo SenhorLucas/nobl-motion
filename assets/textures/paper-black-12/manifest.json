@@ -1,0 +1,61 @@
+{
+ "id": "paper-black-12",
+ "kind": "boil-texture",
+ "frames": 12,
+ "master": {
+  "pattern": "master/%02d.png",
+  "size": [
+   5096,
+   2867
+  ]
+ },
+ "web": {
+  "pattern": "web/%02d.webp",
+  "size": [
+   2560,
+   1440
+  ]
+ },
+ "contact_sheet": "contact.jpg",
+ "normalised": {
+  "mean": 0.5,
+  "std": 0.1,
+  "flatten": 0.03
+ },
+ "presets": {
+  "light": {
+   "blend": "multiply",
+   "mean": 0.97,
+   "spread": 0.022
+  },
+  "dark": {
+   "blend": "screen",
+   "mean": 0.03,
+   "spread": 0.018
+  }
+ },
+ "swap": "Swap cadence is the --boil-every token (brand/tokens.css), not per set.",
+ "source": {
+  "path": "/Users/lucasviana/Downloads/BlackPaperPNG",
+  "kind": "folder",
+  "files": [
+   "BlackPaper001.png",
+   "BlackPaper002.png",
+   "BlackPaper003.png",
+   "BlackPaper004.png",
+   "BlackPaper005.png",
+   "BlackPaper006.png",
+   "BlackPaper007.png",
+   "BlackPaper008.png",
+   "BlackPaper009.png",
+   "BlackPaper010.png",
+   "BlackPaper011.png",
+   "BlackPaper012.png"
+  ],
+  "threshold": null,
+  "origin": "BlackPaperPNG folder in Downloads; pack and author unknown"
+ },
+ "licence": "unknown: check before any use outside private renders",
+ "own": false,
+ "notes": "Black art paper, 12 separate sheets. Fine even fibres, no folds."
+}

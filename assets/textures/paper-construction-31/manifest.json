@@ -1,0 +1,48 @@
+{
+ "id": "paper-construction-31",
+ "kind": "boil-texture",
+ "frames": 31,
+ "master": {
+  "pattern": "master/%02d.png",
+  "size": [
+   3840,
+   2160
+  ]
+ },
+ "web": {
+  "pattern": "web/%02d.webp",
+  "size": [
+   2560,
+   1440
+  ]
+ },
+ "contact_sheet": "contact.jpg",
+ "normalised": {
+  "mean": 0.5,
+  "std": 0.1,
+  "flatten": 0.03
+ },
+ "presets": {
+  "light": {
+   "blend": "multiply",
+   "mean": 0.97,
+   "spread": 0.022
+  },
+  "dark": {
+   "blend": "screen",
+   "mean": 0.03,
+   "spread": 0.018
+  }
+ },
+ "swap": "Swap cadence is the --boil-every token (brand/tokens.css), not per set.",
+ "source": {
+  "path": "/Users/lucasviana/Downloads/PB - 18 Gritty Animated Textures/Animated Textures/Construction Paper.mp4",
+  "kind": "video",
+  "files": "31 distinct frames of Construction Paper.mp4",
+  "threshold": 1.0,
+  "origin": "PremiumBeat free pack: 18 Gritty Animated Textures (premiumbeat.com/blog/free-animated-textures)"
+ },
+ "licence": "PremiumBeat free asset: use in videos; no resale or redistribution of the files",
+ "own": false,
+ "notes": "Construction paper, stop-motion loop held on fours. Coarser, blotchier fibres than paper-black-12."
+}

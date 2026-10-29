@@ -1,0 +1,5 @@
+# Third-party: never committed. Only the manifest is tracked; rebuild with
+# python3 scripts/prepare_textures.py --rebuild <id>
+*
+!manifest.json
+!.gitignore
