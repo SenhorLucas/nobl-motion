@@ -1,0 +1,138 @@
+/* Brand tokens for motion.
+ *
+ * Source of truth for colour and type: squarespace-boltons
+ * widgets_preact/src/theme/tokens.css (the store). Values are copied, not
+ * re-derived; when the store's tokens change, sync them here. Names follow the
+ * store's DESIGN.md (kodachrome-*, paper, ink, darkroom) so the two read alike.
+ *
+ * Sizes are in container units. Every composition root has
+ * `container-type: size`, so 1cqmin = 1% of the short side (10.8px at 1080p,
+ * 21.6px at 4K) and the same scene works at 16:9, 9:16 and 1:1.
+ *
+ * Anything marked PROPOSED is a gap the sources don't cover: a placeholder
+ * so the brand card renders, pending Lucas's choice in brand/motion.md.
+ */
+
+@font-face {
+  font-family: "Outfit";
+  src: url("../assets/fonts/Outfit-Variable.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+:root {
+  /* ---------- Kodachrome stripe: accents, never areas ---------- */
+  --kodachrome-red: #F44336;
+  --kodachrome-yellow: #FFD966;
+  --kodachrome-green: #1CA168;
+  --kodachrome-blue: #2986CC;
+  --kodachrome-red-deep: #D63426;
+  --kodachrome-yellow-deep: #E9B93C;
+  --kodachrome-green-deep: #138A56;
+  --kodachrome-blue-deep: #1E6FB0;
+  --leader-black: #0B0A08;
+  --leader-cream: #FFFEE8;
+
+  /* ---------- Paper world: warm off-white, warm near-black ink ---------- */
+  --paper: #FAF6EC;
+  --paper-raised: #F3ECDC;
+  --paper-well: #E9DFC9;
+  --surface: #FFFFFF;
+  --ink: #1A1714;
+  --ink-secondary: #4F473C;
+  --ink-muted: #8B8170;
+  --ink-faint: #B6AC97;
+  --line: rgba(26, 23, 20, 0.12);
+  --line-soft: rgba(26, 23, 20, 0.06);
+
+  /* ---------- Darkroom world: deep warm black, cream text ---------- */
+  --darkroom: #14120E;
+  --darkroom-raised: #211E18;
+  --darkroom-line: rgba(255, 254, 232, 0.14);
+  --on-darkroom: #F3ECDC;
+  --on-darkroom-muted: #B6AC97;
+
+  /* ---------- Viz: the one exception to the Warm Tint Rule ----------
+   * Colours being explained are judged against true neutral (store's
+   * --scope-* tokens). Channel colours are data labels for R/G/B traces. */
+  --viz-ground: #1E1E1E;
+  --viz-grid: rgba(255, 255, 255, 0.08);
+  --viz-grid-strong: rgba(255, 255, 255, 0.20);
+  --viz-ink: #F3ECDC;
+  --viz-ink-muted: rgba(243, 236, 220, 0.62);
+  --viz-r: #FF5A4E;
+  --viz-g: #49C96E;
+  --viz-b: #5A93FF;
+
+  /* ---------- Type: Outfit for every role ---------- */
+  --font: "Outfit", system-ui, sans-serif;
+  /* PROPOSED: the store forbids a second face; the Lab uses JetBrains Mono for
+   * data. Until decided, numbers are Outfit with tabular-nums. */
+  --font-data: "Outfit", system-ui, sans-serif;
+
+  /* Video type scale on the short side. Web sizes don't carry over (they're
+   * read at arm's length at 1-1.2x); these are the store's ratios scaled to
+   * HyperFrames' measured title sizes (4-9% of frame height).
+   * PROPOSED values; ratios follow the store's display/headline/title/body.
+   * Floor: 2.6cqmin (28px at 1080), what a phone can read (HyperFrames check).
+   * Nothing a viewer reads goes below it. */
+  --t-display: 10cqmin;   /* 108px at 1080: hero word, one line */
+  --t-headline: 6.5cqmin; /* 70px: section/beat title */
+  --t-title: 4.4cqmin;    /* 48px: card titles, chart titles */
+  --t-body: 3.2cqmin;     /* 35px: the one sentence on screen */
+  --t-label: 2.6cqmin;    /* 28px: film-leader eyebrow, uppercase */
+  --t-data: 2.6cqmin;     /* 28px: axis ticks, readouts */
+  --t-annotation: 2.6cqmin; /* 28px: swatch names, figure notes */
+
+  --lh-tight: 1.04;
+  --lh-snug: 1.18;
+  --lh-body: 1.4;          /* store body is 1.6; video lines are short */
+  --tr-display: -0.03em;
+  --tr-headline: -0.025em;
+  --tr-snug: -0.015em;
+  --tr-label: 0.18em;
+
+  /* ---------- Space: the store's 4px steps, scaled x1.35 to video ---------- */
+  --s-1: 0.5cqmin;
+  --s-2: 1cqmin;
+  --s-3: 1.5cqmin;
+  --s-4: 2cqmin;
+  --s-5: 2.5cqmin;
+  --s-6: 3cqmin;
+  --s-7: 4cqmin;
+  --s-8: 5cqmin;
+  --s-9: 8cqmin;
+  --s-10: 13.75cqmin;
+  --safe-action: 5%;       /* 90% action-safe box */
+  --safe-title: 10%;       /* 80% title-safe box */
+
+  /* ---------- Shape ---------- */
+  --r-xs: 0.5cqmin;
+  --r-sm: 1cqmin;
+  --r-md: 1.5cqmin;
+  --r-lg: 2.25cqmin;
+  --r-pill: 999px;
+  --hairline: 0.15cqmin;   /* PROPOSED: 1px web hairline is invisible on video */
+  --stripe: 0.6cqmin;      /* the 5-6px stripe rule, scaled */
+
+  /* ---------- Motion: PROPOSED, see brand/motion.md ----------
+   * Eases are GSAP names (read with getComputedStyle, trimmed). Durations in
+   * seconds. No bounce, overshoot or infinite loops (store rule). */
+  --ease-enter: power3.out;
+  --ease-exit: power2.in;
+  --ease-move: power2.inOut;
+  --ease-develop: sine.inOut;
+  --ease-linear: none;
+  --dur-micro: 0.15s;      /* store UI transitions: colour fades, tiny shifts */
+  --dur-exit: 0.35s;
+  --dur-enter: 0.7s;
+  --dur-move: 0.9s;
+  --dur-develop: 1.8s;     /* an image coming up in the developer */
+  --stagger-word: 0.08s;
+  --stagger-item: 0.06s;
+  --hold-base: 0.5s;       /* read hold = base + per-word x words */
+  --hold-per-word: 0.3s;
+
+  /* ---------- Texture ---------- */
+  --grain-opacity: 0.18;   /* store's darkroom grain overlay */
+}
