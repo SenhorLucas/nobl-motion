@@ -30,7 +30,7 @@ found text. Textures come from the photographer's desk.
 | 09 | Swatch chip | A sampled colour, with its value | Leader to the sample point (`swatch({ sample })`) | 3 |
 | 10 | Keeper mark (red grease pencil) | The chosen frame on a contact sheet or negative strip | The frame (`keeper({ around })`) | 1 |
 | 11 | Labels | Chapter numeral ("01."), label box (black), tracked eyebrow | Chapter top-left; labels next to or leading to their target | 2 labels + 1 eyebrow |
-| 12 | Desk textures | Grid paper, enlarger test strip, negative strip, paper grain | Under the content (depth 0); test strips and negatives are generated from parameters | — |
+| 12 | Desk textures | Grid paper, enlarger test strip, negative strip, paper (boil set) | Under the content (depth 0); paper is `components/paper-boil.js` on a set from `assets/textures/`; test strips and negatives are generated from parameters | — |
 
 Composition: **one hero, one field, at most one secondary object, at most two
 accents beyond the type.** Empty paper is a feature, not a gap to fill.
@@ -81,27 +81,38 @@ Black-and-white halftone (HyperFrames *Monochrome Screen Print*, palette ink
 - **Depth:** every element has `data-depth`. It sets paint order now and
   parallax later.
 
-| depth | Plane | Parallax factor |
+| depth | Plane | Parallax factor (push-through only) |
 | --- | --- | --- |
 | 0 | Paper, textures, grid paper | 0.2× |
 | 1 | Fields, numeral, sunburst | 0.5× |
 | 2 | Cutouts | 1× |
-| 3 | Type and accents | 1.15× |
+| 3 | Type and accents | never transformed |
 
-## Motion (rules; not built yet)
+## Motion
+
+Revised 29 Oct 2026 after the first sample: the background jitter and the
+slow push-ins read as shaky and unpolished, and scaling text made it shimmer.
 
 - **Frame rate: 24 fps.**
-- **Camera:** smooth drift and push along one eased path per beat, at most
-  about 3% scale per beat. Each plane moves by the camera offset times its
-  parallax factor. That difference is what makes small moves feel real.
-- **On twos:**
-  - Textures change only on even frames (12 per second): paper-grain
-    offset, halftone screen phase, and a 1 px boil on sticker edges, arrows
-    and the keeper mark. All seeded by `floor(frame / 2)`, so every frame
-    stays a function of time.
-  - Elements are *placed*, like paper by hand: they arrive over 2–3 held
-    frames, with no tweened ease-in.
-  - The camera is the only smooth thing.
+- **The camera holds still.** No drift, no push-in inside a beat. A landed
+  frame is dead still; motion comes from elements being placed.
+- **Camera moves are transitions, not ambience.** A push-through (the dive
+  into a lens) or a reframe between two compositions: one eased move, then
+  hold. Planes 0-2 move by their parallax factor; plane 3 stays put.
+- **Text never scales.** Type is rendered at its final size and never takes
+  a `scale` transform (subpixel re-rasterising makes glyph edges crawl).
+  Text that must leave during a camera move is hidden first.
+- **The paper boils; nothing jitters.** The organic feel comes from texture
+  boil: the paper is swapped for another sheet of the same stock every
+  `--boil-every` frames (3 = 8 swaps a second), in a seeded order, while
+  everything stays exactly where it is (`components/paper-boil.js`). No
+  translate/offset jitter on paper, accents or edges. Boil lives only in
+  paper and texture layers, never on type, cutouts or data.
+- **Placed, not tweened:** elements arrive over 2–3 held frames
+  (`steps()`), like paper put down by hand.
+- **Line boil (open):** a 1-2 px seeded displacement on hand-drawn strokes
+  every 3 frames is allowed as an opt-in per stroke; not built yet. Try it
+  on the arrow first, and only if the strokes look too dead.
 - **Transitions,** each caused by something on screen:
   - **Match cut on shape:** the circle field becomes the lens; a swatch chip
     becomes the next field.
@@ -120,6 +131,10 @@ Black-and-white halftone (HyperFrames *Monochrome Screen Print*, palette ink
     follows.
 
 ## Open
+
+- Boil strength: `--boil-strength` (1 = the set's preset). Judge it on a
+  real render at 1920 on a phone and a monitor; the noise should be felt,
+  not seen.
 
 - Lucas's own cutouts and contact sheets replace the public-domain
   placeholders.

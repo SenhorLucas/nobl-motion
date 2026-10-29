@@ -20,7 +20,8 @@ almost nothing about video motion; the store's one rule is for UI.
 ## Working defaults (HyperFrames craft notes, adopted until a reason not to)
 
 - Arrive slow, leave clean: exits about half the length of entrances.
-- A landed title is dead still; the motion moves elsewhere.
+- A landed title is dead still; the motion moves elsewhere. Text never takes
+  a scale transform (decided 29 Oct): no push-ins under titles.
 - Overlap: the next element starts when the previous is 30-50% done.
 - Read holds: `--hold-base` + `--hold-per-word` x words; the last line ≥ 2 s.
 - 3-5 transition kinds per video, each caused by something on screen.
@@ -72,12 +73,14 @@ The photographic process gives transitions with a cause, unique to us:
 
 ### 5. Grain on motion
 
-- The store has a static SVG grain (0.18, overlay), currently turned off on
-  the hero. On video, static grain reads as dirt on the lens; moving grain
-  has to be seeded per frame (deterministic).
-- A. None. B. Seeded per-frame grain on darkroom scenes only, at
-  `--grain-opacity`. C. Real film grain from `colr` baked into image assets,
-  none on graphics.
+- **Paper (decided 29 Oct):** paper boil from real scanned sheets
+  (`components/paper-boil.js`, sets in `assets/textures/`), swapped every
+  `--boil-every` frames, never moved. Offset jitter is out: it read as
+  camera shake.
+- Film grain on darkroom scenes is still open: A. none; B. a boil set made
+  from grain scans of Lucas's own negatives (same component, `ground:
+  "dark"`); C. real film grain from `colr` baked into image assets, none on
+  graphics.
 
 ### 6. Data type
 

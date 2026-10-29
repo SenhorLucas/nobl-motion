@@ -10,8 +10,11 @@ a colour scientist, so small details and colour accuracy matter.
 - `brand/`: `tokens.css` (all values), `motion.md`, `signatures.md`, and
   `reference/` (brand card, colour check).
 - `components/COMPONENTS.md` index of components (JS modules), one line each.
+- `assets/textures/<id>/` boil-texture sets: read `manifest.json` and look at
+  `contact.jpg`, never the frames. Made by `scripts/prepare_textures.py`
+  (see `assets/textures/README.md`).
 - `scenes/<video>/<scene>/` `spec.md`, `index.html`, `data/`.
-- `scripts/stage.mjs`, `render.mjs`, `colour_check.py`. `renders/` (gitignored).
+- `scripts/stage.mjs`, `render.mjs`, `colour_check.py`, `prepare_textures.py`. `renders/` (gitignored).
 
 **Staging.** HyperFrames' check/snapshot/preview/render work on the root
 `index.html` only, so `node scripts/stage.mjs <dir> [9x16]` copies a
@@ -41,6 +44,8 @@ files the task touches. Never load other scenes' code wholesale; grep them.
   after it: sRGB code values pass through unchanged and are tagged bt709. Every
   render's tags are checked; the patch check must pass (see `render` skill).
 - **The second appearance makes a component** (`new-scene`, `promote-component`).
+- **Motion:** the camera holds still inside a beat; text never scales; the
+  organic feel is paper boil, never jitter (`brand/collage/SYSTEM.md`, Motion).
 - Deterministic only: no `Date.now()`, unseeded `Math.random()`, network
   fetches, timers or infinite repeats. Run `npm run check` after every edit.
 - No `hyperframes feedback` reports or `publish` unless Lucas asks.
